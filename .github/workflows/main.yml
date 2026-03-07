@@ -87,6 +87,9 @@ jobs:
         run: |
           ssh -p ${{ secrets.HOSTINGER_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} -o StrictHostKeyChecking=no 'echo "SSH connection successful"'
 
+      - name: Remove workspace .env before SSH steps
+        run: rm -f .env
+
       - name: Deploy to Hostinger
         uses: easingthemes/ssh-deploy@main
         env:
