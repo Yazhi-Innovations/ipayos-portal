@@ -98,7 +98,7 @@ jobs:
           REMOTE_USER: ${{ secrets.HOSTINGER_USER }}
           REMOTE_PORT: ${{ secrets.HOSTINGER_PORT }}
           TARGET: ${{ secrets.HOSTINGER_PATH_PROD }}
-          EXCLUDE: "/.git/, /.github/, /node_modules/, /tests/, .env, .env.example, .env.development, .gitignore public/uploads"
+          EXCLUDE: "/.git/, /.github/, /node_modules/, /tests/, .env.example, .env.development, .gitignore public/uploads"
           ARGS: "-rltgoDzvO --delete --exclude=.env --exclude=public/uploads --exclude=storage/* --exclude=bootstrap/cache/*"
 
       - name: Post Deployment Commands
