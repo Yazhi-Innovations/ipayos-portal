@@ -21,10 +21,11 @@ jobs:
           extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql, bcmath, zip
           
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          
+          node-version: '22'
+          cache: 'npm'
+
       - name: Install PHP Dependencies
         run: |
           composer require spatie/laravel-ignition
@@ -35,6 +36,7 @@ jobs:
         run: |
           rm -rf public/build
           rm -rf node_modules
+          rm -f package-lock.json
           npm install
           npm run build
 
