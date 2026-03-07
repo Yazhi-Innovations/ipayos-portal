@@ -110,6 +110,8 @@ jobs:
           port: ${{ secrets.HOSTINGER_PORT }}
           script: |
             cd ${{ secrets.HOSTINGER_PATH_PROD }}
+            mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs bootstrap/cache
+            chmod -R 775 storage bootstrap/cache
             php artisan config:clear
             php artisan cache:clear
             php artisan route:clear
