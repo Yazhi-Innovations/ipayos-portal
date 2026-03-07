@@ -52,6 +52,26 @@ jobs:
       - name: Directory Permissions
         run: chmod -R 755 storage bootstrap/cache
 
+      - name: Check deploy secrets
+        env:
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USER: ${{ secrets.HOSTINGER_USER }}
+          PATH_PROD: ${{ secrets.HOSTINGER_PATH_PROD }}
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          missing=""
+          [ -z "$HOST" ] && missing="HOSTINGER_HOST "
+          [ -z "$PORT" ] && missing="${missing}HOSTINGER_PORT "
+          [ -z "$USER" ] && missing="${missing}HOSTINGER_USER "
+          [ -z "$PATH_PROD" ] && missing="${missing}HOSTINGER_PATH_PROD "
+          [ -z "$SSH_KEY" ] && missing="${missing}SSH_PRIVATE_KEY "
+          if [ -n "$missing" ]; then
+            echo "::error::Missing required secrets: $missing"
+            echo "Add them in: Repository Settings → Secrets and variables → Actions"
+            exit 1
+          fi
+
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
