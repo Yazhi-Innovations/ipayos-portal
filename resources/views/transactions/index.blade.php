@@ -41,7 +41,7 @@
                     <thead class="table-light">
                     <tr>
                         <th>ID</th>
-                        <th>User</th>
+                        <th>Reference</th>
                         <th>Amount</th>
                         <th>Status</th>
                         <th>Mobile</th>
@@ -53,18 +53,12 @@
                     @forelse($transactions as $tx)
                         <tr>
                             <td>{{ $tx->ncc_txn_id ?? $tx->id }}</td>
-                            <td>
-                                @if($tx->user)
-                                    {{ trim(($tx->user->user_first_name ?? '').' '.($tx->user->user_last_name ?? '')) ?: ($tx->user->user_email ?? '-') }}
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td>{{ $tx->ncc_amount ?? '-' }}</td>
+                            <td>{{ $tx->ncc_client_reference ?? '-' }}</td>
+                            <td>{{ isset($tx->ncc_amount) && $tx->ncc_amount !== '' ? 'LKR ' . number_format((float) $tx->ncc_amount, 2) : '-' }}</td>
                             <td>{{ $tx->status ?? '-' }}</td>
                             <td>{{ $tx->ncc_msisdn ?? '-' }}</td>
                             <td>{{ $tx->ncc_email ?? $tx->user->user_email ?? '-' }}</td>
-                            <td>{{ $tx->last_updated }}</td>
+                            <td>@if(!empty($tx->last_updated))<span data-utc-datetime="{{ \Carbon\Carbon::parse($tx->last_updated)->utc()->toIso8601String() }}"></span>@else-@endif</td>
                         </tr>
                     @empty
                         <tr>

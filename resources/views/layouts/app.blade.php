@@ -118,6 +118,35 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+    function formatUtcToLocal(utcIsoString) {
+        if (!utcIsoString) return '';
+        try {
+            var date = new Date(utcIsoString);
+            if (isNaN(date.getTime())) return utcIsoString;
+            return date.toLocaleString(undefined, {
+                dateStyle: 'short',
+                timeStyle: 'medium'
+            });
+        } catch (e) {
+            return utcIsoString;
+        }
+    }
+    function applyLocalTimes() {
+        document.querySelectorAll('[data-utc-datetime]').forEach(function (el) {
+            var utc = el.getAttribute('data-utc-datetime');
+            el.textContent = formatUtcToLocal(utc);
+        });
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyLocalTimes);
+    } else {
+        applyLocalTimes();
+    }
+})();
+</script>
+@stack('scripts')
 </body>
 </html>
 

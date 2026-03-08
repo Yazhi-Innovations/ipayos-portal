@@ -91,9 +91,9 @@
                             @forelse($latest as $tx)
                                 <tr>
                                     <td>{{ $tx->ncc_txn_id ?? $tx->id }}</td>
-                                    <td>{{ $tx->ncc_amount ?? '-' }}</td>
+                                    <td>{{ isset($tx->ncc_amount) && $tx->ncc_amount !== '' ? 'LKR ' . number_format((float) $tx->ncc_amount, 2) : '-' }}</td>
                                     <td>{{ $tx->status ?? '-' }}</td>
-                                    <td>{{ $tx->last_updated }}</td>
+                                    <td>@if(!empty($tx->last_updated))<span data-utc-datetime="{{ \Carbon\Carbon::parse($tx->last_updated)->utc()->toIso8601String() }}"></span>@else-@endif</td>
                                 </tr>
                             @empty
                                 <tr>
@@ -126,9 +126,9 @@
                             @forelse($unsettled as $tx)
                                 <tr>
                                     <td>{{ $tx->ncc_txn_id ?? $tx->id }}</td>
-                                    <td>{{ $tx->ncc_amount ?? '-' }}</td>
+                                    <td>{{ isset($tx->ncc_amount) && $tx->ncc_amount !== '' ? 'LKR ' . number_format((float) $tx->ncc_amount, 2) : '-' }}</td>
                                     <td>{{ $tx->status ?? '-' }}</td>
-                                    <td>{{ $tx->last_updated }}</td>
+                                    <td>@if(!empty($tx->last_updated))<span data-utc-datetime="{{ \Carbon\Carbon::parse($tx->last_updated)->utc()->toIso8601String() }}"></span>@else-@endif</td>
                                 </tr>
                             @empty
                                 <tr>
