@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->user_password;
     }
 
+    public function nccClient()
+    {
+        return $this->hasOne(NccClient::class, 'user_id', 'user_id');
+    }
+
     public function checkPlainOrLegacyPassword(string $plain): bool
     {
         $stored = $this->user_password;

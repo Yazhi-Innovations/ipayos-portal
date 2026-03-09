@@ -103,6 +103,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('transactions.index') }}">Transactions</a>
                     </li>
+                    @if(in_array(Auth::user()->role ?? '', ['admin', 'accountant']))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('settlement.index') }}" id="nav-link-settlement">Settlement</a>
+                    </li>
+                    @endif
                 </ul>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -120,6 +125,16 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 (function () {
+    var settlementLink = document.getElementById('nav-link-settlement');
+    if (settlementLink) {
+        try {
+            var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            if (tz) {
+                var href = settlementLink.getAttribute('href');
+                settlementLink.setAttribute('href', href + (href.indexOf('?') === -1 ? '?' : '&') + 'timezone=' + encodeURIComponent(tz));
+            }
+        } catch (e) {}
+    }
     function formatUtcToLocal(utcIsoString) {
         if (!utcIsoString) return '';
         try {
