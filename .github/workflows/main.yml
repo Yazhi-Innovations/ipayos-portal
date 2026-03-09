@@ -110,6 +110,8 @@ jobs:
           port: ${{ secrets.HOSTINGER_PORT }}
           script: |
             cd ${{ secrets.HOSTINGER_PATH_PROD }}
+            # Ensure autoload is up to date on the server
+            composer dump-autoload
             mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs bootstrap/cache
             chmod -R 775 storage bootstrap/cache
             php artisan config:clear
