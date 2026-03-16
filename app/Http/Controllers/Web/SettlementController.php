@@ -27,15 +27,20 @@ class SettlementController extends Controller
     }
 
     /**
-     * Threshold = end of the previous working day in web user timezone, converted to UTC.
-     * Only transactions with last_updated <= this are included (i.e. at least 1 full working day ago).
+     * Threshold = end of the day two working days ago in web user timezone, converted to UTC.
+     * Only transactions with last_updated <= this are included (i.e. at least 2 full working days ago).
      * Working days = Monday–Friday; going back from today skips weekends.
      */
     private function getPendingSettlementThresholdUtc(string $userTimezone): Carbon
     {
-        $cutoff = Carbon::now($userTimezone)->subDay();
-        while ($cutoff->isWeekend()) {
+        $cutoff = Carbon::now($userTimezone);
+        $workingDaysGoneBack = 0;
+
+        while ($workingDaysGoneBack < 2) {
             $cutoff->subDay();
+            if (! $cutoff->isWeekend()) {
+                $workingDaysGoneBack++;
+            }
         }
 
         return $cutoff->endOfDay()->setTimezone('UTC');
