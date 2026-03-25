@@ -151,7 +151,7 @@ class SettlementController extends Controller
                 $references = $startTxn && $endTxn ? "{$startTxn}-{$endTxn}" : '';
 
                 $row = [
-                    '030100088888009',
+                    '988413289392788',
                     'Yazhi Innovation (Pvt) Ltd',
                     $valueDate,
                     $user->settlement_bank ?? '',
@@ -181,7 +181,7 @@ class SettlementController extends Controller
             $finalReferences = ($globalStartTxn && $globalEndTxn) ? "C-{$globalStartTxn}-{$globalEndTxn}" : '';
 
             $finalRow = [
-                '030100088888009',
+                '988413289392788',
                 'Yazhi Innovation (Pvt) Ltd',
                 $finalValueDate,
                 '7287',
