@@ -103,6 +103,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('transactions.index') }}">Transactions</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('settlement.history.index') }}">Settlement History</a>
+                    </li>
                     @if(in_array(Auth::user()->role ?? '', ['admin', 'accountant']))
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('settlement.index') }}" id="nav-link-settlement">Settlement</a>

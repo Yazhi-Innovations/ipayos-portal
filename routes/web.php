@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\TransactionController;
 use App\Http\Controllers\Web\SettlementController;
+use App\Http\Controllers\Web\SettlementHistoryController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('home');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -14,6 +15,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/settlement-history', [SettlementHistoryController::class, 'index'])->name('settlement.history.index');
     Route::get('/settlement', [SettlementController::class, 'index'])->name('settlement.index')->middleware('settlement');
     Route::get('/settlement/csv', [SettlementController::class, 'exportCsv'])->name('settlement.export.csv')->middleware('settlement');
     Route::get('/settlement/user/{user}', [SettlementController::class, 'downloadUserPdf'])->name('settlement.user.pdf')->middleware('settlement');
